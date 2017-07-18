@@ -7,7 +7,6 @@
     "Vpc": {
       "Type" : "AWS::EC2::VPC",
       "Description": "Id of the VPC",
-      "Default": "vpc-932cb8f6"
     },
 
     "Az": {
