@@ -24,6 +24,13 @@
 			"Type": "AWS::EC2::KeyPair::KeyName",
 			"ConstraintDescription": "must be the name of an existing EC2 KeyPair."
 		},
+    "ImageId": {
+      "Type": "String",
+      "Description": "Amazon AMI Id from which instance will be launched",
+      "AllowedValues": ["ami-e196b0f7", "ami-a4c7edb2", "ami-4b133c5d", "ami-d15a75c7"],
+			"ConstraintDescription": "must be a valid AMI Id.",
+      "Default": "ami-d15a75c7"
+    },
 
 		"InstanceType": {
 			"Description": "WebServer EC2 instance type",
@@ -70,60 +77,16 @@
 		}
 	},
 
-	"Mappings": {
-		"AWSInstanceType2Arch": {
-			"t2.nano": {
-				"Arch": "HVM64"
-			},
-			"t2.micro": {
-				"Arch": "HVM64"
-			},
-			"t2.small": {
-				"Arch": "HVM64"
-			},
-			"t2.medium": {
-				"Arch": "HVM64"
-			}
-		},
-
-		"AWSRegionArch2AMI": {
-			"us-east-1": {
-				"HVM64": "ami-d15a75c7"
-			}
-		}
-	},
-
-
 	"Resources": {
 		"EC2Instance": {
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
-				"ImageId": {
-					"Fn::FindInMap": ["AWSRegionArch2AMI", {
-							"Ref": "AWS::Region"
-						},
-						{
-							"Fn::FindInMap": ["AWSInstanceType2Arch", {
-								"Ref": "InstanceType"
-							}, "Arch"]
-						}
-					]
-				},
-				"InstanceType": {
-					"Ref": "InstanceType"
-				},
-				"AvailabilityZone": {
-					"Ref": "Az"
-				},
-				"SubnetId": {
-					"Ref": "SubnetId"
-				},
-				"SecurityGroups": [{
-					"Ref": "InstanceSecurityGroup"
-				}],
-				"KeyName": {
-					"Ref": "KeyName"
-				},
+				"ImageId": {  "Ref" : "ImageId" } ,
+				"InstanceType": { "Ref": "InstanceType"	},
+				"AvailabilityZone": { "Ref": "Az" },
+				"SubnetId": { "Ref": "SubnetId" },
+				"SecurityGroups": [{ "Ref": "InstanceSecurityGroup" }],
+				"KeyName": { "Ref": "KeyName"	},
 				"BlockDeviceMappings": [{
 					"DeviceName": "/dev/sda1",
 					"Ebs": {
