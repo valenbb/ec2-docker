@@ -54,6 +54,11 @@
 			"Type": "String"
 		},
 
+    "TagName": {
+			"Description": "Server Name",
+			"Type": "String"
+		},
+
 		"SSHLocation": {
 			"Description": "The IP address range that can be used to SSH to the EC2 instances",
 			"Type": "String",
@@ -128,7 +133,7 @@
 				"Tags": [{
 						"Key": "Name",
 						"Value": {
-							"Ref": "AWS::StackName"
+							"Ref": "TagName"
 						}
 					},
 					{
