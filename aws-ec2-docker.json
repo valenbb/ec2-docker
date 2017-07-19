@@ -156,10 +156,7 @@
 					}
 				]
 			},
-			"UserData": {
-				"Fn::Base64": {
-					"Fn::Join": [
-						"", [
+			 "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
 							"#!/bin/bash -e\n",
 							"\n",
 							"echo \"Installing Docker\"\n",
@@ -171,10 +168,7 @@
 							"sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual\n",
 							"apt-get install -y docker-ce\n",
 							"usermod -aG docker ubuntu\n"
-						]
-					]
-				}
-			}
+						]]}}
 		},
 
 		"InstanceSecurityGroup": {
