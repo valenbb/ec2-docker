@@ -5,7 +5,7 @@
 
   "Parameters" : {
     "Vpc": {
-      "Type" : "AWS::EC2::VPC",
+      "Type" : "AWS::EC2::VPC::Id",
       "Description": "Id of the VPC",
     },
 
