@@ -88,10 +88,22 @@
 		}
 	},
 
+
 	"Resources": {
 		"EC2Instance": {
 			"Type": "AWS::EC2::Instance",
 			"Properties": {
+				"ImageId": {
+					"Fn::FindInMap": ["AWSRegionArch2AMI", {
+							"Ref": "AWS::Region"
+						},
+						{
+							"Fn::FindInMap": ["AWSInstanceType2Arch", {
+								"Ref": "InstanceType"
+							}, "Arch"]
+						}
+					]
+				},
 				"InstanceType": {
 					"Ref": "InstanceType"
 				},
@@ -106,17 +118,6 @@
 				}],
 				"KeyName": {
 					"Ref": "KeyName"
-				},
-				"ImageId": {
-					"Fn::FindInMap": ["AWSRegionArch2AMI", {
-							"Ref": "AWS::Region"
-						},
-						{
-							"Fn::FindInMap": ["AWSInstanceType2Arch", {
-								"Ref": "InstanceType"
-							}, "Arch"]
-						}
-					]
 				},
 				"BlockDeviceMappings": [{
 					"DeviceName": "/dev/sda1",
@@ -154,11 +155,12 @@
 							"Ref": "TagRole"
 						}
 					}
-				]
-			},
-			 "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
-							"#!/bin/bash -e\n",
-							"\n",
+				],
+				"UserData": {
+					"Fn::Base64": {
+						"Fn::Join": ["", [
+							"#!/bin/bash -xe\n",
+
 							"echo \"Installing Docker\"\n",
 							"sudo apt-get update\n",
 							"sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common\n",
@@ -168,7 +170,10 @@
 							"sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual\n",
 							"apt-get install -y docker-ce\n",
 							"usermod -aG docker ubuntu\n"
-						]]}}
+						]]
+					}
+				}
+			}
 		},
 
 		"InstanceSecurityGroup": {
