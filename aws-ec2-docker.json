@@ -147,6 +147,7 @@
 		"InstanceSecurityGroup": {
 			"Type": "AWS::EC2::SecurityGroup",
 			"Properties": {
+				"VpcId" : { "Ref" : "Vpc" },
 				"GroupDescription": "Enable SSH access via port 22",
 				"SecurityGroupIngress": [{
 					"IpProtocol": "tcp",
