@@ -85,7 +85,7 @@
 				"InstanceType": { "Ref": "InstanceType"	},
 				"AvailabilityZone": { "Ref": "Az" },
 				"SubnetId": { "Ref": "SubnetId" },
-				"SecurityGroups": [{ "Ref": "InstanceSecurityGroup" }],
+				"SecurityGroupsIds": [{ "Ref": "InstanceSecurityGroup" }],
 				"KeyName": { "Ref": "KeyName"	},
 				"BlockDeviceMappings": [{
 					"DeviceName": "/dev/sda1",
